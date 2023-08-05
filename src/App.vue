@@ -1,6 +1,9 @@
 <template>
-  <NavbarComponent/>
-  <router-view></router-view>
+  <div class="h-screen">
+    <NavbarComponent/>
+    <router-view></router-view>
+  </div>
+
 </template>
 
 <script setup>

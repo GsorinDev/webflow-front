@@ -9,6 +9,7 @@ import HomeComponent from '@/components/home/HomeComponent'
 import DashboardComponent from '@/components/dashboard/DashboardComponent'
 import TicketsComponent from '@/components/dashboard/tickets/TicketsComponent'
 import GantComponent from '@/components/dashboard/gant/GantComponent'
+import BacklogComponent from "@/components/dashboard/backlog/BacklogComponent.vue";
 
 library.add(faUserSecret, faBars, faMagnifyingGlass, faClose, faGreaterThan, faLessThan)
 
@@ -41,6 +42,13 @@ const router = createRouter({
                     name: 'gant',
                     components: {
                         board : GantComponent
+                    }
+                },
+                {
+                    path: 'backlog',
+                    name: 'backlog',
+                    components: {
+                        board : BacklogComponent
                     }
                 },
             ]

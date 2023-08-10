@@ -10,6 +10,7 @@ import DashboardComponent from '@/components/dashboard/DashboardComponent'
 import TicketsComponent from '@/components/dashboard/tickets/TicketsComponent'
 import GantComponent from '@/components/dashboard/gant/GantComponent'
 import BacklogComponent from "@/components/dashboard/backlog/BacklogComponent.vue";
+import {createPinia} from "pinia";
 
 library.add(faUserSecret, faBars, faMagnifyingGlass, faClose, faGreaterThan, faLessThan)
 
@@ -57,6 +58,7 @@ const router = createRouter({
 })
 
 createApp(App)
-.use(router)
-.component('font-awesome-icon', FontAwesomeIcon)
-.mount('#app')
+    .use(router)
+    .use(createPinia())
+    .component('font-awesome-icon', FontAwesomeIcon)
+    .mount('#app')

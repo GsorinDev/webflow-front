@@ -1,12 +1,18 @@
 <script setup>
 import {defineProps} from 'vue'
-defineProps(['event', 'ticket'])
-import _ from 'lodash'
+defineProps(['ticket'])
+
+const startDrag = (event, item) => {
+  console.log(item)
+  event.dataTransfer.dropEffect = 'move'
+  event.dataTransfer.effectAllowed = 'move'
+  event.dataTransfer.setData('ticket', JSON.stringify(item))
+}
 </script>
 
 <template>
-  <div class="w-full h-16 rounded my-2 text-white bg-[#28293d]" v-if="_.last(ticket.events).type === event.name" draggable="true">
-    {{ticket.title}}
+  <div class="w-full h-16 rounded my-2 text-white bg-[#28293d]" draggable="true" @dragstart="startDrag($event, ticket)">
+    {{ticket.title}} {{ ticket._id }}
   </div>
 </template>
 

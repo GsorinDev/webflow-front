@@ -3,13 +3,13 @@
         <div class="bg-[#201c2c] relative top-0 right-0" :class="{ 'w-4': !isClosed, 'w-56' : isClosed}">
             <div v-if="isClosed" class="text-white flex justify-center items-center">
                 <ul class="w-56 flex flex-col">
-                    <li class="h-12 flex items-center" :class="[link === 'tickets' ? 'bg-blue-600 bg-opacity-50' : '']">
+                    <li class="h-12 flex items-center" :class="[link === 'tickets' ? 'bg-sky-600 bg-opacity-70' : '']">
                         <router-link class="ml-4" :to="{name: 'tickets'}" @click="link = 'tickets'">Tickets</router-link>
                     </li>
-                    <li class="h-12 flex items-center" :class="[link === 'backlog' ? 'bg-blue-600 bg-opacity-50' : '']">
+                    <li class="h-12 flex items-center" :class="[link === 'backlog' ? 'bg-sky-600 bg-opacity-70' : '']">
                       <router-link class="ml-4" :to="{name: 'backlog'}" @click="link = 'backlog'" >Backlog</router-link>
                     </li>
-                    <li class="h-12 flex items-center" :class="[link === 'gant' ? 'bg-blue-600 bg-opacity-50' : '']">
+                    <li class="h-12 flex items-center" :class="[link === 'gant' ? 'bg-sky-600 bg-opacity-70' : '']">
                         <router-link class="ml-4" :to="{name: 'gant'}" @click="link = 'gant'" >Gant</router-link>
                     </li>
                 </ul>

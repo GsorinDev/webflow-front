@@ -11,11 +11,10 @@ const startDrag = (event, item) => {
 </script>
 
 <template>
-  <div class="w-full h-16 rounded my-2 text-white bg-[#28293d]" draggable="true" @dragstart="startDrag($event, ticket)">
+  <div class="w-full h-16 rounded my-2 text-white bg-[#28293d] hover:cursor-grab active:cursor-grabbing" draggable="true" @dragstart="startDrag($event, ticket)">
     {{ticket.title}} {{ ticket._id }}
   </div>
 </template>
 
 <style scoped>
-
 </style>

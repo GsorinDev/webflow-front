@@ -6,9 +6,13 @@ const apiUrl = 'http://localhost:3000'
 const ticketsStore = defineStore("ticketsStore", {
     state : () => ({
         tickets : [{name: 'being', list: []},{name: 'blocked', list: []},{name: 'finish', list: []},{name: 'production', list: []}],
+        backlog : []
     }),
     actions : {
         async getAllTickets() {
+
+            this.tickets = [{name: 'being', list: []},{name: 'blocked', list: []},{name: 'finish', list: []},{name: 'production', list: []}]
+            this.backlog = []
             await fetch(`${apiUrl}/ticket`, {
                 method: "GET",
                 headers: {
@@ -20,7 +24,7 @@ const ticketsStore = defineStore("ticketsStore", {
                 const tickets = await result.json()
 
                 tickets.filter(ticket => {
-                    switch (_.last(ticket.events).type) {
+                    switch (_.last(ticket.events)?.type) {
                         case "being":
                             this.tickets[0].list.push(ticket)
                             break;
@@ -34,6 +38,7 @@ const ticketsStore = defineStore("ticketsStore", {
                             this.tickets[3].list.push(ticket)
                             break;
                         default:
+                            this.backlog.push(ticket)
                             break;
                     }
                 })
@@ -50,7 +55,7 @@ const ticketsStore = defineStore("ticketsStore", {
                 body: JSON.stringify({type : listName})
             }).then(result => {
                 if(result.ok) {
-                    const arrayOfExistingTicket = this.tickets.find(list => list.name === _.last(ticket.events).type).list
+                    const arrayOfExistingTicket = this.tickets.find(list => list.name === _.last(ticket.events)?.type).list
 
                     const index = arrayOfExistingTicket.map(x => x._id).indexOf(ticket._id);
                     arrayOfExistingTicket.splice(index, 1)

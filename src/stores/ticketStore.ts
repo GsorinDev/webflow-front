@@ -1,7 +1,10 @@
 import {defineStore} from "pinia";
 import _ from 'lodash'
 
-const apiUrl = 'http://localhost:3000'
+let apiUrl = 'http://localhost:3000'
+if(process.env.API) {
+    apiUrl = 'https://api-webflow.georgio-sorin.fr/'
+}
 
 const ticketsStore = defineStore("ticketsStore", {
     state : () => ({

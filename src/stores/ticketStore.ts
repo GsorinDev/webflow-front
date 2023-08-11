@@ -3,7 +3,7 @@ import _ from 'lodash'
 
 let apiUrl = 'http://localhost:3000'
 if(process.env.API) {
-    apiUrl = 'https://api-webflow.georgio-sorin.fr/'
+    apiUrl = 'https://api-webflow.georgio-sorin.fr'
 }
 
 const ticketsStore = defineStore("ticketsStore", {

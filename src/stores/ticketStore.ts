@@ -2,6 +2,7 @@ import {defineStore} from "pinia";
 import _ from 'lodash'
 
 let apiUrl = 'http://localhost:3000'
+console.log(process.env.VUE_APP_API)
 if(process.env.VUE_APP_API) {
     apiUrl = 'https://api-webflow.georgio-sorin.fr'
 }

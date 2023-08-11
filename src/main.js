@@ -4,7 +4,16 @@ import './tailwind.css';
 import {createRouter, createWebHistory} from "vue-router";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faBars, faClose, faGreaterThan, faLessThan, faMagnifyingGlass, faUserSecret } from '@fortawesome/free-solid-svg-icons'
+import {
+    faAnglesDown,
+    faAnglesUp,
+    faBars,
+    faClose, faEquals,
+    faGreaterThan,
+    faLessThan,
+    faMagnifyingGlass,
+    faUserSecret
+} from '@fortawesome/free-solid-svg-icons'
 import HomeComponent from '@/components/home/HomeComponent'
 import DashboardComponent from '@/components/dashboard/DashboardComponent'
 import TicketsComponent from '@/components/dashboard/tickets/TicketsComponent'
@@ -12,7 +21,7 @@ import GantComponent from '@/components/dashboard/gant/GantComponent'
 import BacklogComponent from "@/components/dashboard/backlog/BacklogComponent.vue";
 import {createPinia} from "pinia";
 
-library.add(faUserSecret, faBars, faMagnifyingGlass, faClose, faGreaterThan, faLessThan)
+library.add(faUserSecret, faBars, faMagnifyingGlass, faClose, faGreaterThan, faLessThan, faAnglesUp, faAnglesDown, faEquals)
 
 const router = createRouter({
     history: createWebHistory(),

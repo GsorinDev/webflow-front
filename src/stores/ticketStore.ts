@@ -6,16 +6,19 @@ if(process.env.VUE_APP_API) {
     apiUrl = 'https://api-webflow.georgio-sorin.fr'
 }
 
+
 const ticketsStore = defineStore("ticketsStore", {
     state : () => ({
         tickets : [{name: 'being', list: []},{name: 'blocked', list: []},{name: 'finish', list: []},{name: 'production', list: []}],
-        backlog : []
+        backlog : [],
+        listEtatTicket : ['being', 'blocked', 'production', 'finish', 'backlog']
     }),
     actions : {
         async getAllTickets() {
 
             this.tickets = [{name: 'being', list: []},{name: 'blocked', list: []},{name: 'finish', list: []},{name: 'production', list: []}]
             this.backlog = []
+
             await fetch(`${apiUrl}/ticket`, {
                 method: "GET",
                 headers: {
@@ -27,7 +30,7 @@ const ticketsStore = defineStore("ticketsStore", {
                 const tickets = await result.json()
 
                 tickets.filter(ticket => {
-                    switch (_.last(ticket.events)?.type) {
+                    switch (_.last(ticket.events).type) {
                         case "being":
                             this.tickets[0].list.push(ticket)
                             break;
@@ -58,7 +61,7 @@ const ticketsStore = defineStore("ticketsStore", {
                 body: JSON.stringify({type : listName})
             }).then(result => {
                 if(result.ok) {
-                    const arrayOfExistingTicket = this.tickets.find(list => list.name === _.last(ticket.events)?.type).list
+                    const arrayOfExistingTicket = this.tickets.find(list => list.name === _.last(ticket.events).type).list
 
                     const index = arrayOfExistingTicket.map(x => x._id).indexOf(ticket._id);
                     arrayOfExistingTicket.splice(index, 1)
@@ -66,6 +69,19 @@ const ticketsStore = defineStore("ticketsStore", {
                     this.tickets.find(list => list.name === listName).list.push(ticket)
                     ticket.events.push({type : listName, date: new Date()})
                 }
+            })
+        },
+        async updateEtatTicketBacklog(listName, ticket) {
+            await fetch(`${apiUrl}/ticket/event/${ticket._id}`, {
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                },
+                body: JSON.stringify({type : listName})
+            }).then(() => {
+                ticket.events.push({type : listName, date: new Date()})
             })
         }
     }

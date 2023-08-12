@@ -20,6 +20,7 @@ import TicketsComponent from '@/components/dashboard/tickets/TicketsComponent'
 import GantComponent from '@/components/dashboard/gant/GantComponent'
 import BacklogComponent from "@/components/dashboard/backlog/BacklogComponent.vue";
 import {createPinia} from "pinia";
+import AuthComponent from "@/components/auth/AuthComponent.vue";
 
 library.add(faUserSecret, faBars, faMagnifyingGlass, faClose, faGreaterThan, faLessThan, faAnglesUp, faAnglesDown, faEquals)
 
@@ -29,9 +30,12 @@ const router = createRouter({
         {
             path: '/',
             name: 'home',
-            components: {
-                base : HomeComponent
-            },
+            component :HomeComponent
+        },
+        {
+            path: '/auth',
+            name: 'auth',
+            component: AuthComponent
         },
         {
             path: '/dashboard',

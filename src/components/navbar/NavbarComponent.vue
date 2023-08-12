@@ -29,7 +29,10 @@
             <input type="text" class="bg-transparent border border-white rounded-xl w-full mx-4 pl-8 py-1">
         </div>
         <div class="col-start-10 flex justify-center items-center">
-            <button class="">Se connecter</button>
+          <button v-if="hasToken()" class="text-white m-5 cursor-pointer">
+            <router-link :to="{name: 'auth'}">Se connecter</router-link>
+          </button>
+          <button v-else @click="removeToken()">Se déconnecter</button>
         </div>
     </div>
 </template>
@@ -38,6 +41,13 @@
 import {ref} from 'vue'
 const toggleMenu = ref(false)
 
+const hasToken = () => {
+  return localStorage.getItem('token') === null
+}
+
+const removeToken = () => {
+  localStorage.removeItem('token')
+}
 </script>
 
 <style>

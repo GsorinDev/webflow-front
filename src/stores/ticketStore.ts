@@ -11,7 +11,8 @@ const ticketsStore = defineStore("ticketsStore", {
     state : () => ({
         tickets : [{name: 'being', list: []},{name: 'blocked', list: []},{name: 'finish', list: []},{name: 'production', list: []}],
         backlog : [],
-        listEtatTicket : ['being', 'blocked', 'production', 'finish', 'backlog']
+        listEtatTicket : ['being', 'blocked', 'production', 'finish', 'backlog'],
+        filter: {q : "", project_id: ""}
     }),
     actions : {
         async getAllTickets() {
@@ -83,6 +84,13 @@ const ticketsStore = defineStore("ticketsStore", {
             }).then(() => {
                 ticket.events.push({type : listName, date: new Date()})
             })
+        },
+        filteredBacklogTickets() {
+            if (this.filter.q !== "") {
+                return this.backlog.filter(ticket => ticket.title.toLowerCase().includes(this.filter.q.toLowerCase()) || ticket.id.toLowerCase().includes(this.filter.q.toLowerCase()))
+            } else {
+                return this.backlog
+            }
         }
     }
 })

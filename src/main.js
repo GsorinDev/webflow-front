@@ -21,6 +21,7 @@ import GantComponent from '@/components/dashboard/gant/GantComponent'
 import BacklogComponent from "@/components/dashboard/backlog/BacklogComponent.vue";
 import {createPinia} from "pinia";
 import AuthComponent from "@/components/auth/AuthComponent.vue";
+import {authStore} from "@/stores/authStore.ts";
 
 library.add(faUserSecret, faBars, faMagnifyingGlass, faClose, faGreaterThan, faLessThan, faAnglesUp, faAnglesDown, faEquals)
 
@@ -48,26 +49,41 @@ const router = createRouter({
                     name: 'tickets',
                     components: {
                         board : TicketsComponent
-                    }
-                    
+                    },
+                    meta: { requiresConnected: true }
                 },
                 {
                     path: 'gant',
                     name: 'gant',
                     components: {
                         board : GantComponent
-                    }
+                    },
+                    meta: { requiresConnected: true }
                 },
                 {
                     path: 'backlog',
                     name: 'backlog',
                     components: {
                         board : BacklogComponent
-                    }
+                    },
+                    meta: { requiresConnected: true }
                 },
             ]
         },
     ]
+})
+
+router.beforeEach((to, from, next) => {
+    const isAuthenticated = authStore().token
+    const requiresConnected = to.matched.some(record => record.meta.requiresConnected)
+
+    if (isAuthenticated !== '') {
+        next()
+    } else if (requiresConnected) {
+        next('/auth')
+    } else {
+        next()
+    }
 })
 
 createApp(App)

@@ -30,7 +30,7 @@ const ticketsStore = defineStore("ticketsStore", {
                 const tickets = await result.json()
 
                 tickets.filter(ticket => {
-                    switch (_.last(ticket.events).type) {
+                    switch (_.get(_.last(ticket.events), "type")) {
                         case "being":
                             this.tickets[0].list.push(ticket)
                             break;
@@ -61,7 +61,7 @@ const ticketsStore = defineStore("ticketsStore", {
                 body: JSON.stringify({type : listName})
             }).then(result => {
                 if(result.ok) {
-                    const arrayOfExistingTicket = this.tickets.find(list => list.name === _.last(ticket.events).type).list
+                    const arrayOfExistingTicket = this.tickets.find(list => list.name === _.get(_.last(ticket.events), "type")).list
 
                     const index = arrayOfExistingTicket.map(x => x._id).indexOf(ticket._id);
                     arrayOfExistingTicket.splice(index, 1)

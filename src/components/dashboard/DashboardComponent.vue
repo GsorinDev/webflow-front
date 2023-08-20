@@ -22,14 +22,20 @@
             </div>
         </div>
         <router-view name="board"></router-view>
+
     </div>
+
+  <div>
+    <modal-ticket-component v-if="modalOpen" @closeModalTicket="modalOpen = false"></modal-ticket-component>
+  </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import {useRouter} from "vue-router";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-
+import ModalTicketComponent from "@/components/modals/modalTicketComponent.vue";
+import {modalOpen} from "@/utils/utils.ts";
 
 const router = useRouter()
 const link = ref(router.currentRoute.value.name)

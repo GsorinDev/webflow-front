@@ -8,10 +8,10 @@ import {
     faAnglesDown,
     faAnglesUp,
     faBars,
-    faClose, faEquals,
+    faClose, faCopy, faEquals, faFolder,
     faGreaterThan,
     faLessThan,
-    faMagnifyingGlass,
+    faMagnifyingGlass, faNewspaper, faPen, faUser,
     faUserSecret
 } from '@fortawesome/free-solid-svg-icons'
 import HomeComponent from '@/components/home/HomeComponent'
@@ -23,7 +23,7 @@ import {createPinia} from "pinia";
 import AuthComponent from "@/components/auth/AuthComponent.vue";
 import {authStore} from "@/stores/authStore.ts";
 
-library.add(faUserSecret, faBars, faMagnifyingGlass, faClose, faGreaterThan, faLessThan, faAnglesUp, faAnglesDown, faEquals)
+library.add(faUserSecret, faBars, faMagnifyingGlass, faClose, faGreaterThan, faLessThan, faAnglesUp, faAnglesDown, faEquals, faCopy, faNewspaper, faPen, faUser, faFolder)
 
 const router = createRouter({
     history: createWebHistory(),

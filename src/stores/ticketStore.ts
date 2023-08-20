@@ -12,7 +12,8 @@ const ticketsStore = defineStore("ticketsStore", {
         tickets : [{name: 'being', list: []},{name: 'blocked', list: []},{name: 'finish', list: []},{name: 'production', list: []}],
         backlog : [],
         listEtatTicket : ['being', 'blocked', 'production', 'finish', 'backlog'],
-        filter: {q : "", project_id: ""}
+        filter: {q : "", project_id: ""},
+        ticket: {}
     }),
     actions : {
         async getAllTickets() {

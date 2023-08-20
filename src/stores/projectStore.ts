@@ -23,6 +23,9 @@ const projectsStore = defineStore("projectsStore", {
             }).then(async (result) => {
                 this.projects = await result.json()
             })
+        },
+        getProjetWhereIdTicket(project_id) {
+            return this.projects.find((project) => project._id === project_id)
         }
     }
 })

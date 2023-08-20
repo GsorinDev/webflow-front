@@ -86,11 +86,28 @@ const ticketsStore = defineStore("ticketsStore", {
             })
         },
         filteredBacklogTickets() {
-            if (this.filter.q !== "") {
-                return this.backlog.filter(ticket => ticket.title.toLowerCase().includes(this.filter.q.toLowerCase()) || ticket.id.toLowerCase().includes(this.filter.q.toLowerCase()))
+            if (this.filter.q !== "" || this.filter.project_id !== "") {
+                if (this.filter.project_id !== "") {
+                    return this.backlog.filter(ticket => (ticket.title.toLowerCase().includes(this.filter.q.toLowerCase()) || ticket.id.toLowerCase().includes(this.filter.q.toLowerCase())) && ticket.project_id === this.filter.project_id)
+                }
+                return this.backlog.filter(ticket => ticket.title.toLowerCase().includes(this.filter.q.toLowerCase()) || ticket.id.toLowerCase().includes(this.filter.q.toLowerCase()) || ticket.project_id === this.filter.project_id)
             } else {
                 return this.backlog
             }
+        },
+        filteredDeveloppementTickets(ticket) {
+            if (this.filter.q !== "" || this.filter.project_id !== "") {
+                if (this.filter.project_id !== "") {
+                    return (ticket.title.toLowerCase().includes(this.filter.q.toLowerCase()) || ticket.id.toLowerCase().includes(this.filter.q.toLowerCase())) && ticket.project_id === this.filter.project_id
+                }
+                return ticket.title.toLowerCase().includes(this.filter.q.toLowerCase()) || ticket.id.toLowerCase().includes(this.filter.q.toLowerCase()) || ticket.project_id === this.filter.project_id
+            } else {
+                return ticket
+            }
+        },
+        removeFilter() {
+            this.filter.q = ''
+            this.filter.project_id = ''
         }
     }
 })

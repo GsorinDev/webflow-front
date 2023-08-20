@@ -9,8 +9,8 @@
                     <li class="h-12 flex items-center" :class="[link === 'backlog' ? 'bg-sky-600 bg-opacity-70' : '']">
                       <router-link class="ml-4" :to="{name: 'backlog'}" @click="link = 'backlog'" >Backlog</router-link>
                     </li>
-                    <li class="h-12 flex items-center" :class="[link === 'gant' ? 'bg-sky-600 bg-opacity-70' : '']">
-                        <router-link class="ml-4" :to="{name: 'gant'}" @click="link = 'gant'" >Gant</router-link>
+                    <li class="h-12 flex items-center" :class="[link === 'gantt' ? 'bg-sky-600 bg-opacity-70' : '']">
+                        <router-link class="ml-4" :to="{name: 'gantt'}" @click="link = 'gantt'" >Gantt</router-link>
                     </li>
                 </ul>
             </div>
@@ -27,8 +27,12 @@
 
 <script setup>
 import { ref } from "vue";
+import {useRouter} from "vue-router";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
-const link = ref('tickets')
+
+const router = useRouter()
+const link = ref(router.currentRoute.value.name)
 
 const isClosed = ref(true)
 </script>

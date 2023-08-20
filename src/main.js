@@ -53,8 +53,8 @@ const router = createRouter({
                     meta: { requiresConnected: true }
                 },
                 {
-                    path: 'gant',
-                    name: 'gant',
+                    path: 'gantt',
+                    name: 'gantt',
                     components: {
                         board : GantComponent
                     },
@@ -72,6 +72,23 @@ const router = createRouter({
         },
     ]
 })
+
+function isTokenExpired(token) {
+    try {
+        const tokenData = JSON.parse(atob(token.split('.')[1]));
+        const expirationDate = new Date(tokenData.exp * 1000); // Convertir en millisecondes
+        const currentDate = new Date();
+
+        return currentDate > expirationDate;
+    } catch (error) {
+        console.error('Erreur lors de la vérification de la date d\'expiration du token:', error);
+        return true; // En cas d'erreur, considérons le token comme expiré par sécurité.
+    }
+}
+
+if (isTokenExpired(localStorage.getItem("token"))) {
+    localStorage.removeItem("token")
+}
 
 router.beforeEach((to, from, next) => {
     const isAuthenticated = authStore().token

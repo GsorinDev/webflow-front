@@ -35,7 +35,10 @@ const etatTicket = ref('backlog')
 
 <template>
   <div class="bg-[#201c2c] h-10 mb-2 rounded text-white flex items-center grid grid-cols-8">
-    <span class="col-start-1 col-end-2 mx-auto">{{ticket.id}}</span>
+    <div class="col-start-1 col-end-2 mx-auto flex w-full justify-center">
+      <div class="h-6 border mr-4 my-auto border-pink-600"></div>
+      <span class="mr-8">{{ticket.id}}</span>
+    </div>
     <span class="col-start-2 col-end-5 ">{{ticket.title}}</span>
     <span class="col-start-5 col-end-6 flex justify-end"><font-awesome-icon :icon="iconClass()"></font-awesome-icon></span>
     <div class="col-start-6 col-end-8 mx-4">

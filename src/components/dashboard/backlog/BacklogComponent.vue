@@ -4,12 +4,19 @@ import { projectsStore } from '@/stores/projectStore.ts'
 import TicketComponent from "@/components/dashboard/backlog/TicketComponent.vue";
 import _ from "lodash";
 import ProjectComponent from "@/components/dashboard/project/projectComponent.vue";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 const storeProjects = projectsStore()
-storeProjects.getAllProjects()
-
 const storeTickets = ticketsStore()
-storeTickets.getAllTickets()
+
+if (_.isEmpty(storeProjects.projects)) {
+  storeProjects.getAllProjects()
+}
+
+if (_.isEmpty(storeTickets.backlog)) {
+  storeTickets.getAllTickets()
+}
+storeTickets.removeFilter()
 </script>
 
 <template>
@@ -20,8 +27,9 @@ storeTickets.getAllTickets()
         <font-awesome-icon icon="fa-solid fa-magnifying-glass" class="absolute left-7"></font-awesome-icon>
         <input type="text" class="bg-transparent border border-white rounded-xl w-full mx-2 pl-14 py-1 outline-0" v-model="storeTickets.filter.q">
       </div>
-      <div class="mx-2 flex mb-6">
+      <div class="mx-2 flex mb-6 items-center">
         <project-component v-for="project in storeProjects.projects" :key="project" :project="project"></project-component>
+        <button @click="storeTickets.filter.project_id = ''" class="bg-[#201c2c] rounded w-8 h-8 hover:bg-red-600 active:bg-red-700"><font-awesome-icon icon="fa-solid fa-close"></font-awesome-icon></button>
       </div>
       <button class="w-36 bg-sky-600 py-1 rounded ml-auto mr-2 mb-4 text-white">Créer un ticket</button>
       <div class="h-full mx-2">

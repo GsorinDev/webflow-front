@@ -151,7 +151,7 @@ const project = ref(storeProjects.getProjetWhereIdTicket(storeTickets.ticket.pro
                 <div class="flex flex-col mx-4">
                   <label for="github_branch">Créer branche :</label>
                   <div class="relative mt-2">
-                    <input type="text" class="border border-transparent text-sm text-white w-full px-2 py-2 w-[90%] rounded-lg bg-[#28293d]" disabled :value="`git checkout -b '${storeTickets.ticket.id}/${storeTickets.ticket.title}'`">
+                    <input type="text" class="border border-transparent text-sm text-white w-full px-2 py-2 w-[90%] rounded-lg bg-[#28293d]" disabled :value="`git checkout -b '${storeTickets.ticket.id}/${storeTickets.ticket.title.trim().replaceAll(' ','_')}'`">
                     <font-awesome-icon class="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer" icon="fa-solid fa-copy"></font-awesome-icon>
                   </div>
                   <span class="mt-2" for="">Url : <a class="text-sky-600 hover:text-sky-500 hover:underline" :href="project.github_url">{{project.github_url}}</a></span>

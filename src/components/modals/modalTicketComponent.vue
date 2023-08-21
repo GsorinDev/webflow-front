@@ -4,6 +4,7 @@ import {defineEmits, ref} from "vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {ticketsStore} from "@/stores/ticketStore.ts";
 import {projectsStore} from "@/stores/projectStore.ts";
+import TitleComponent from "@/updateTicketModal/titleComponent.vue";
 
 const emit = defineEmits(['closeModalTicket'])
 const closeModal = () => emit('closeModalTicket');
@@ -30,13 +31,13 @@ const iconClass = () => {
 
   switch (storeTickets.ticket.priority) {
     case 'low':
-      icon = 'fa-angle-down'
+      icon = 'fa-angles-down'
       break;
     case 'medium':
       icon = 'fa-equals'
       break;
     case 'high':
-      icon = 'fa-angle-up'
+      icon = 'fa-angles-up'
       break;
   }
 
@@ -70,6 +71,7 @@ const barColor = (event) => {
 
 const project = ref(storeProjects.getProjetWhereIdTicket(storeTickets.ticket.project_id))
 
+const titleModification = ref(false)
 </script>
 
 <template>
@@ -78,11 +80,20 @@ const project = ref(storeProjects.getProjetWhereIdTicket(storeTickets.ticket.pro
     <div class="fixed inset-0 flex items-center justify-center">
       <div class="flex flex-col bg-[#201c2c] w-[80%] h-[80%] rounded-lg shadow-lg text-white overflow-hidden" >
         <div class="flex">
-          <span class="text-3xl ml-8 mt-4 font-bold">{{storeTickets.ticket.id}} / {{storeTickets.ticket.title}}</span>
+          <div class="flex items-center mt-4 h-10" v-if="!titleModification">
+            <span class="text-3xl ml-8 font-bold">{{storeTickets.ticket.id}} / {{storeTickets.ticket.title}}</span>
+            <div class="w-10 h-10 ml-4 rounded bg-sky-500 flex justify-center items-center" @click="titleModification = true"><font-awesome-icon icon="fa-solid fa-pen"></font-awesome-icon></div>
+          </div>
+
+          <div class="flex items-center mt-4 h-10 w-full" v-if="titleModification">
+            <title-component :ticket="storeTickets.ticket" @titleModification="titleModification = false"></title-component>
+          </div>
+
           <div class="flex w-8 h-8 ml-auto items-center justify-center bg-[#28293d] rounded cursor-pointer">
             <font-awesome-icon @click="closeModal" class=" text-white" icon="fa-solid fa-close"></font-awesome-icon>
           </div>
         </div>
+
         <div class="flex h-[80%] mt-4">
           <div class="flex flex-col w-[65%] h-auto overflow-y-auto">
             <div class="ml-8 mt-4 h-auto mx-8">

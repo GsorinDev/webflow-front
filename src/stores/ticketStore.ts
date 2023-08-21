@@ -109,7 +109,38 @@ const ticketsStore = defineStore("ticketsStore", {
         removeFilter() {
             this.filter.q = ''
             this.filter.project_id = ''
-        }
+        },
+        async updateTicket(ticket, id) {
+            await fetch(`${apiUrl}/ticket/${id}`, {
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                },
+                body: JSON.stringify(ticket)
+            }).then(async (result) => {
+                if(result.ok) {
+                    const ticketRes = await result.json()
+                    this.ticket = ticketRes
+
+                    if(_.get(_.last(ticketRes.events), "type") === 'backlog') {
+                        console.log("toto")
+                        this.backlog.forEach((ticketBacklog) => {
+                            if (ticketBacklog._id === ticketRes._id) {
+                                this.backlog[this.backlog.indexOf(ticketBacklog)] = ticketRes
+                            }
+                        })
+                    } else {
+                        this.tickets.forEach((colonne) => colonne.list.forEach((ticketColonne) => {
+                            if (ticketColonne._id === ticketRes._id) {
+                                colonne.list[colonne.list.indexOf(ticketColonne)] = ticketRes
+                            }
+                        }))
+                    }
+                }
+            })
+        },
     }
 })
 

@@ -8,7 +8,7 @@ import {
     faAnglesDown,
     faAnglesUp,
     faBars,
-    faClose, faCopy, faEquals, faFolder,
+    faClose, faCopy, faEquals, faFloppyDisk, faFolder,
     faGreaterThan,
     faLessThan,
     faMagnifyingGlass, faNewspaper, faPen, faUser,
@@ -23,7 +23,7 @@ import {createPinia} from "pinia";
 import AuthComponent from "@/components/auth/AuthComponent.vue";
 import {authStore} from "@/stores/authStore.ts";
 
-library.add(faUserSecret, faBars, faMagnifyingGlass, faClose, faGreaterThan, faLessThan, faAnglesUp, faAnglesDown, faEquals, faCopy, faNewspaper, faPen, faUser, faFolder)
+library.add(faUserSecret, faBars, faMagnifyingGlass, faClose, faGreaterThan, faLessThan, faAnglesUp, faAnglesDown, faEquals, faCopy, faNewspaper, faPen, faUser, faFolder, faFloppyDisk)
 
 const router = createRouter({
     history: createWebHistory(),

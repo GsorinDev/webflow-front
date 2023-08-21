@@ -11,13 +11,13 @@ const iconClass = () => {
 
   switch (props.ticket.priority) {
     case 'low':
-      icon = 'fa-angle-down'
+      icon = 'fa-angles-down'
       break;
     case 'medium':
       icon = 'fa-equals'
       break;
     case 'high':
-      icon = 'fa-angle-up'
+      icon = 'fa-angles-up'
       break;
   }
 

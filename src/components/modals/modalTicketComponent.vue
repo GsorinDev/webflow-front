@@ -72,6 +72,34 @@ const barColor = (event) => {
 const project = ref(storeProjects.getProjetWhereIdTicket(storeTickets.ticket.project_id))
 
 const titleModification = ref(false)
+const descriptionModification = ref(false)
+const options = [
+  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+  [{ 'font': [] }],
+  [{ 'color': [] }, { 'background': [] }],
+  ['bold', 'italic', 'underline', 'strike'],
+  [{ 'align': [] }],
+  ['blockquote', 'code-block'],
+
+  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+  [{ 'indent': '-1'}, { 'indent': '+1' }],
+
+  ['clean']
+]
+
+const description = ref("")
+const descriptionUpdate = (content) => {
+  description.value = content
+  console.log(description.value)
+}
+
+const updateTicketDescription = () => {
+  const ticket = {title: storeTickets.ticket.title, description: description.value, priority: storeTickets.ticket.priority}
+  if (ticket.description !== "") {
+    storeTickets.updateTicket(ticket, storeTickets.ticket._id)
+    descriptionModification.value = false
+  }
+}
 </script>
 
 <template>
@@ -96,9 +124,20 @@ const titleModification = ref(false)
 
         <div class="flex h-[80%] mt-4">
           <div class="flex flex-col w-[65%] h-auto overflow-y-auto">
-            <div class="ml-8 mt-4 h-auto mx-8">
-              <span class="font-bold">Description : </span>
-              <div class="h-auto border-2 border-[#28293d] description px-8 py-4 mt-2" v-html="storeTickets.ticket.description"></div>
+
+            <div  class="ml-8 mt-4 h-auto mx-8">
+              <div class="flex items-center">
+                <span class="font-bold">Description</span>
+                <div v-if="!descriptionModification" class="w-7 h-7 ml-2 rounded bg-sky-500 flex justify-center items-center" @click="descriptionModification = true"><font-awesome-icon icon="fa-solid fa-pen"></font-awesome-icon></div>
+                <div v-if="descriptionModification" class="w-7 h-7 ml-2 rounded bg-sky-500 flex justify-center items-center" @click="updateTicketDescription()"><font-awesome-icon icon="fa-solid fa-save"></font-awesome-icon></div>
+                <div v-if="descriptionModification" class="w-7 h-7 ml-2 rounded bg-red-500 flex justify-center items-center" @click="descriptionModification = false"><font-awesome-icon icon="fa-solid fa-close"></font-awesome-icon></div>
+
+              </div>
+
+              <div v-if="!descriptionModification" class="h-auto border-2 border-[#28293d] description px-4 py-4 mt-2" v-html="storeTickets.ticket.description"></div>
+            </div>
+            <div v-if="descriptionModification" class="ml-8 mt-4 mb-16 mx-8">
+              <QuillEditor :toolbar="options" :content="storeTickets.ticket.description" contentType="html" @update:content="descriptionUpdate"/>
             </div>
             <div class="ml-8 mt-4 h-auto">
               <span class="font-bold">Historique : </span>
@@ -180,78 +219,80 @@ const titleModification = ref(false)
 <style>
 .description {
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.2;
 }
 
 /* Styles pour les titres */
 .description h1 {
   font-size: 28px; /* Taille pour h1 */
   font-weight: bold;
-  margin-top: 20px;
-  margin-bottom: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .description h2 {
   font-size: 24px; /* Taille pour h2 */
   font-weight: bold;
-  margin-top: 20px;
-  margin-bottom: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .description h3 {
   font-size: 20px; /* Taille pour h3 */
   font-weight: bold;
-  margin-top: 20px;
-  margin-bottom: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .description h4 {
   font-size: 18px; /* Taille pour h4 */
   font-weight: bold;
-  margin-top: 20px;
-  margin-bottom: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .description h5 {
   font-size: 16px; /* Taille pour h5 */
   font-weight: bold;
-  margin-top: 20px;
-  margin-bottom: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .description h6 {
   font-size: 14px; /* Taille pour h6 */
   font-weight: bold;
-  margin-top: 20px;
-  margin-bottom: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .description p,
 .description span,
 .description a {
-  margin-top: 12px;
-  margin-bottom: 12px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 /* Styles pour les listes à puces et les éléments de liste */
 .description ul,
 .description ol {
-  margin-top: 12px;
-  margin-bottom: 12px;
-  padding-left: 20px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  margin-left: 40px;
 }
 
 .description li {
-  margin-top: 6px;
-  margin-bottom: 6px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  list-style-type: circle;
+  padding-left: 4px;
 }
 
 /* Styles pour les tableaux */
 .description table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 12px;
-  margin-bottom: 12px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .description th,
@@ -274,7 +315,7 @@ const titleModification = ref(false)
 .description img {
   max-width: 100%;
   height: auto;
-  margin-top: 12px;
-  margin-bottom: 12px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 </style>

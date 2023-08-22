@@ -22,6 +22,8 @@ import BacklogComponent from "@/components/dashboard/backlog/BacklogComponent.vu
 import {createPinia} from "pinia";
 import AuthComponent from "@/components/auth/AuthComponent.vue";
 import {authStore} from "@/stores/authStore.ts";
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
 library.add(faUserSecret, faBars, faMagnifyingGlass, faClose, faGreaterThan, faLessThan, faAnglesUp, faAnglesDown, faEquals, faCopy, faNewspaper, faPen, faUser, faFolder, faFloppyDisk)
 
@@ -106,5 +108,6 @@ router.beforeEach((to, from, next) => {
 createApp(App)
     .use(router)
     .use(createPinia())
+    .component('QuillEditor',QuillEditor)
     .component('font-awesome-icon', FontAwesomeIcon)
     .mount('#app')

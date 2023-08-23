@@ -7,8 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
     faAnglesDown,
     faAnglesUp,
-    faBars,
-    faClose, faCopy, faEquals, faFloppyDisk, faFolder,
+    faBars, faCalendarDay,
+    faClose, faCopy, faEquals, faEye, faFloppyDisk, faFolder,
     faGreaterThan,
     faLessThan,
     faMagnifyingGlass, faNewspaper, faPen, faUser,
@@ -25,7 +25,7 @@ import {authStore} from "@/stores/authStore.ts";
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
-library.add(faUserSecret, faBars, faMagnifyingGlass, faClose, faGreaterThan, faLessThan, faAnglesUp, faAnglesDown, faEquals, faCopy, faNewspaper, faPen, faUser, faFolder, faFloppyDisk)
+library.add(faUserSecret, faBars, faMagnifyingGlass, faClose, faGreaterThan, faLessThan, faAnglesUp, faAnglesDown, faEquals, faCopy, faNewspaper, faPen, faUser, faFolder, faFloppyDisk, faCalendarDay, faEye)
 
 const router = createRouter({
     history: createWebHistory(),

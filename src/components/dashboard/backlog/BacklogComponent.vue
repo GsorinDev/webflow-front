@@ -6,7 +6,7 @@ import _ from "lodash";
 import ProjectComponent from "@/components/dashboard/project/projectComponent.vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import ModalTicketComponent from "@/components/modals/modalTicketComponent.vue";
-import {modalOpen} from "@/utils/utils.ts";
+import {modalCreateTicket, modalOpen} from "@/utils/utils.ts";
 
 const storeProjects = projectsStore()
 const storeTickets = ticketsStore()
@@ -19,10 +19,6 @@ if (_.isEmpty(storeTickets.backlog)) {
   storeTickets.getAllTickets()
 }
 
-const modalTicket = (ticket) => {
-  storeTickets.ticket = ticket
-  modalOpen.value = true
-}
 storeTickets.removeFilter()
 </script>
 
@@ -38,9 +34,9 @@ storeTickets.removeFilter()
         <project-component v-for="project in storeProjects.projects" :key="project" :project="project"></project-component>
         <button @click="storeTickets.filter.project_id = ''" class="bg-[#201c2c] rounded w-8 h-8 hover:bg-red-600 active:bg-red-700"><font-awesome-icon icon="fa-solid fa-close"></font-awesome-icon></button>
       </div>
-      <button class="w-36 bg-sky-600 py-1 rounded ml-auto mr-2 mb-4 text-white">Créer un ticket</button>
+      <button class="w-36 bg-sky-600 py-1 rounded ml-auto mr-2 mb-4 text-white" @click="modalCreateTicket = true">Créer un ticket</button>
       <div class="h-full mx-2">
-        <ticket-component v-for="ticket in storeTickets.filteredBacklogTickets()" :key="ticket" :ticket="ticket" v-show="_.last(ticket.events).type === 'backlog'" @click="modalTicket(ticket)"></ticket-component>
+        <ticket-component v-for="ticket in storeTickets.filteredBacklogTickets()" :key="ticket" :ticket="ticket" v-show="_.last(ticket.events).type === 'backlog'"></ticket-component>
       </div>
     </div>
   </div>

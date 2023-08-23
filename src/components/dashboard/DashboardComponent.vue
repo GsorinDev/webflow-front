@@ -27,6 +27,7 @@
 
   <div>
     <modal-ticket-component v-if="modalOpen" @closeModalTicket="modalOpen = false"></modal-ticket-component>
+    <modal-create-ticket-component v-if="modalCreateTicket" @closeModalCreateTicket="modalCreateTicket = false"></modal-create-ticket-component>
   </div>
 </template>
 
@@ -35,7 +36,8 @@ import { ref } from "vue";
 import {useRouter} from "vue-router";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import ModalTicketComponent from "@/components/modals/modalTicketComponent.vue";
-import {modalOpen} from "@/utils/utils.ts";
+import {modalCreateTicket, modalOpen} from "@/utils/utils.ts";
+import ModalCreateTicketComponent from "@/components/modals/modalCreateTicketComponent.vue";
 
 const router = useRouter()
 const link = ref(router.currentRoute.value.name)

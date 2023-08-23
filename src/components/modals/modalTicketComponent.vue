@@ -4,7 +4,8 @@ import {defineEmits, ref} from "vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {ticketsStore} from "@/stores/ticketStore.ts";
 import {projectsStore} from "@/stores/projectStore.ts";
-import TitleComponent from "@/updateTicketModal/titleComponent.vue";
+import TitleComponent from "@/components/updateTicketModal/titleComponent.vue";
+import PriorityComponent from "@/components/updateTicketModal/priorityComponent.vue";
 
 const emit = defineEmits(['closeModalTicket'])
 const closeModal = () => emit('closeModalTicket');
@@ -73,9 +74,9 @@ const project = ref(storeProjects.getProjetWhereIdTicket(storeTickets.ticket.pro
 
 const titleModification = ref(false)
 const descriptionModification = ref(false)
+const priorityModification = ref(false)
 const options = [
   [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-  [{ 'font': [] }],
   [{ 'color': [] }, { 'background': [] }],
   ['bold', 'italic', 'underline', 'strike'],
   [{ 'align': [] }],
@@ -140,7 +141,7 @@ const updateTicketDescription = () => {
               <QuillEditor :toolbar="options" :content="storeTickets.ticket.description" contentType="html" @update:content="descriptionUpdate"/>
             </div>
             <div class="ml-8 mt-4 h-auto">
-              <span class="font-bold">Historique : </span>
+              <span class="font-bold">Historiques</span>
               <div class="h-auto border-2 border-[#28293d] description mt-2 mr-8">
                 <div class="bg-[#201c2c] h-10 mb-2 rounded text-white flex items-center grid grid-cols-4" v-for="history in storeTickets.ticket.events" :key="history">
                     <div class="col-start-1 col-end-2 mx-auto flex w-full ml-4">
@@ -173,7 +174,7 @@ const updateTicketDescription = () => {
                     </div>
                     <div class="flex items-center justify-center">
                     <span class="bg-sky-500 rounded flex items-center justify-center w-8 h-8 mr-2">
-                      <font-awesome-icon icon="fa-solid fa-pen"></font-awesome-icon>
+                      <font-awesome-icon icon="fa-solid fa-calendar-day"></font-awesome-icon>
                     </span>
                       <span>{{format(storeTickets.ticket.updated_at)}}</span>
                     </div>
@@ -186,11 +187,15 @@ const updateTicketDescription = () => {
                     </span>
                   </div>
 
-                  <div class="flex items-center mb-4">
-                    <span class="bg-sky-500 rounded flex items-center justify-center w-8 h-8 mr-2">
+                  <div class="flex items-center h-8 mb-4" v-if="!priorityModification">
+                    <span class=" rounded bg-sky-500 flex items-center justify-center w-8 h-8 mr-2">
                       <font-awesome-icon :icon="iconClass()"></font-awesome-icon>
                     </span>
                     <span>{{storeTickets.ticket.priority}}</span>
+                    <div class="w-8 h-8 ml-2 rounded bg-sky-500 flex justify-center items-center" @click="priorityModification = true"><font-awesome-icon icon="fa-solid fa-pen"></font-awesome-icon></div>
+                  </div>
+                  <div class="flex items-center mb-4" v-if="priorityModification">
+                    <priority-component :ticket="storeTickets.ticket" @priorityModification="priorityModification = false"></priority-component>
                   </div>
                 </div>
               </div>

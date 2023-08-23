@@ -12,6 +12,7 @@ const ticketsStore = defineStore("ticketsStore", {
         tickets : [{name: 'being', list: []},{name: 'blocked', list: []},{name: 'finish', list: []},{name: 'production', list: []}],
         backlog : [],
         listEtatTicket : ['being', 'blocked', 'production', 'finish', 'backlog'],
+        priority : ['high','medium','low'],
         filter: {q : "", project_id: ""},
         ticket: {}
     }),
@@ -84,6 +85,11 @@ const ticketsStore = defineStore("ticketsStore", {
                 body: JSON.stringify({type : listName})
             }).then(() => {
                 ticket.events.push({type : listName, date: new Date()})
+                this.tickets.forEach(list => {
+                    if(list.name === listName) {
+                        list.list.push(ticket)
+                    }
+                })
             })
         },
         filteredBacklogTickets() {
@@ -141,6 +147,21 @@ const ticketsStore = defineStore("ticketsStore", {
                 }
             })
         },
+        async createTicket(ticket) {
+            await fetch(`${apiUrl}/ticket`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                },
+                body: JSON.stringify(ticket)
+            }).then(async (result) => {
+                if(result.ok) {
+                    this.backlog.push(await result.json())
+                }
+            })
+        }
     }
 })
 
